@@ -83,9 +83,14 @@ export type Database = {
           certifications: string | null
           cooking_styles: string[] | null
           created_at: string
+          featured: boolean | null
           hourly_rate: number | null
           id: string
+          languages: string[] | null
+          professional_experience: string | null
+          profile_completed: boolean | null
           rating: number | null
+          service_areas: string[] | null
           specialties: string[] | null
           updated_at: string
           years_of_experience: number | null
@@ -97,9 +102,14 @@ export type Database = {
           certifications?: string | null
           cooking_styles?: string[] | null
           created_at?: string
+          featured?: boolean | null
           hourly_rate?: number | null
           id: string
+          languages?: string[] | null
+          professional_experience?: string | null
+          profile_completed?: boolean | null
           rating?: number | null
+          service_areas?: string[] | null
           specialties?: string[] | null
           updated_at?: string
           years_of_experience?: number | null
@@ -111,9 +121,14 @@ export type Database = {
           certifications?: string | null
           cooking_styles?: string[] | null
           created_at?: string
+          featured?: boolean | null
           hourly_rate?: number | null
           id?: string
+          languages?: string[] | null
+          professional_experience?: string | null
+          profile_completed?: boolean | null
           rating?: number | null
+          service_areas?: string[] | null
           specialties?: string[] | null
           updated_at?: string
           years_of_experience?: number | null
@@ -247,7 +262,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      chef_registration_status: "pending" | "approved" | "rejected"
     }
     CompositeTypes: {
       [_ in never]: never
