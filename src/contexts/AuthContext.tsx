@@ -11,6 +11,7 @@ interface UserProfile {
   email: string | null;
   avatar_url: string | null;
   role: string | null;
+  chef_registration_status: string | null;
 }
 
 interface AuthContextType {
