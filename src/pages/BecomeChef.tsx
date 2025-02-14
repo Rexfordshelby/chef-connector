@@ -40,11 +40,12 @@ const BecomeChef = () => {
     try {
       setLoading(true);
 
-      // Update profile with chef registration status
+      // Update profile with chef status and role
       const { error: profileError } = await supabase
         .from("profiles")
         .update({
-          chef_registration_status: "pending",
+          chef_registration_status: "approved",
+          role: "chef"
         })
         .eq("id", user.id);
 
@@ -60,12 +61,12 @@ const BecomeChef = () => {
           certifications: formData.certifications,
           languages: formData.languages.split(",").map(l => l.trim()),
           service_areas: formData.serviceAreas.split(",").map(a => a.trim()),
-          profile_completed: false,
+          profile_completed: true, // Set to true since we're auto-approving
         });
 
       if (chefProfileError) throw chefProfileError;
 
-      toast.success("Your application has been submitted successfully!");
+      toast.success("Welcome aboard! Your chef profile has been created.");
       navigate("/dashboard");
     } catch (error: any) {
       toast.error(error.message);
