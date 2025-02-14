@@ -11,6 +11,7 @@ import Signup from "./pages/Signup";
 import Explore from "./pages/Explore";
 import BecomeChef from "./pages/BecomeChef";
 import NotFound from "./pages/NotFound";
+import { AuthProvider } from "./contexts/AuthContext";
 
 const queryClient = new QueryClient();
 
@@ -18,20 +19,22 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <BrowserRouter>
-        <MainNav />
-        <main className="pt-16 min-h-screen">
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/explore" element={<Explore />} />
-            <Route path="/become-chef" element={<BecomeChef />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </main>
+        <AuthProvider>
+          <MainNav />
+          <main className="pt-16 min-h-screen">
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/explore" element={<Explore />} />
+              <Route path="/become-chef" element={<BecomeChef />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </main>
+          <Toaster />
+          <Sonner />
+        </AuthProvider>
       </BrowserRouter>
-      <Toaster />
-      <Sonner />
     </TooltipProvider>
   </QueryClientProvider>
 );
