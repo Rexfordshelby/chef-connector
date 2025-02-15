@@ -19,7 +19,7 @@ const ChefDashboard = () => {
     const fetchStats = async () => {
       if (!user) return;
 
-      // Fetch total bookings and earnings - now including client_id
+      // Fetch total bookings and earnings
       const { data: bookings } = await supabase
         .from("bookings")
         .select("total_amount, client_id")
@@ -31,20 +31,24 @@ const ChefDashboard = () => {
         .select("rating")
         .eq("chef_id", user.id);
 
-      // Calculate stats
-      const totalBookings = bookings?.length || 0;
-      const totalEarnings = bookings?.reduce((sum, booking) => sum + (booking.total_amount || 0), 0) || 0;
-      const uniqueClients = new Set(bookings?.map(booking => booking.client_id)).size;
-      const averageRating = reviews?.length 
-        ? reviews.reduce((sum, review) => sum + (review.rating || 0), 0) / reviews.length 
-        : 0;
+      if (bookings) {
+        // Calculate stats
+        const totalBookings = bookings.length;
+        const totalEarnings = bookings.reduce((sum, booking) => sum + (booking.total_amount || 0), 0);
+        // Get unique client count by filtering out duplicates and null values
+        const uniqueClients = new Set(bookings.filter(b => b.client_id).map(b => b.client_id)).size;
 
-      setStats({
-        totalBookings,
-        totalEarnings,
-        totalClients: uniqueClients,
-        averageRating,
-      });
+        const averageRating = reviews?.length 
+          ? reviews.reduce((sum, review) => sum + (review.rating || 0), 0) / reviews.length 
+          : 0;
+
+        setStats({
+          totalBookings,
+          totalEarnings,
+          totalClients: uniqueClients,
+          averageRating,
+        });
+      }
     };
 
     fetchStats();
