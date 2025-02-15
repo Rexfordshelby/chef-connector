@@ -11,6 +11,12 @@ import Signup from "./pages/Signup";
 import Explore from "./pages/Explore";
 import BecomeChef from "./pages/BecomeChef";
 import NotFound from "./pages/NotFound";
+import ChefDashboard from "./pages/chef/Dashboard";
+import ChefBookings from "./pages/chef/Bookings";
+import ChefProfile from "./pages/chef/Profile";
+import ChefAnalytics from "./pages/chef/Analytics";
+import ChefMenu from "./pages/chef/Menu";
+import ChefReviews from "./pages/chef/Reviews";
 import { AuthProvider } from "./contexts/AuthContext";
 
 const queryClient = new QueryClient();
@@ -28,6 +34,14 @@ const App = () => (
               <Route path="/signup" element={<Signup />} />
               <Route path="/explore" element={<Explore />} />
               <Route path="/become-chef" element={<BecomeChef />} />
+              <Route path="/chef">
+                <Route path="dashboard" element={<ChefDashboard />} />
+                <Route path="bookings" element={<ChefBookings />} />
+                <Route path="profile" element={<ChefProfile />} />
+                <Route path="analytics" element={<ChefAnalytics />} />
+                <Route path="menu" element={<ChefMenu />} />
+                <Route path="reviews" element={<ChefReviews />} />
+              </Route>
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
