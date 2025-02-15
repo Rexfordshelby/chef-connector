@@ -19,10 +19,10 @@ const ChefDashboard = () => {
     const fetchStats = async () => {
       if (!user) return;
 
-      // Fetch total bookings and earnings
+      // Fetch total bookings and earnings - now including client_id
       const { data: bookings } = await supabase
         .from("bookings")
-        .select("total_amount")
+        .select("total_amount, client_id")
         .eq("chef_id", user.id);
 
       // Fetch average rating
