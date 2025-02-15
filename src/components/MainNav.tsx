@@ -5,7 +5,7 @@ import { ChefHat, LogIn, LogOut, UserPlus } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
 export function MainNav() {
-  const { user, signOut } = useAuth();
+  const { user, profile, signOut } = useAuth();
 
   return (
     <nav className="border-b bg-white/80 backdrop-blur-md fixed w-full z-50">
@@ -19,9 +19,12 @@ export function MainNav() {
           <Link to="/explore" className="text-muted-foreground hover:text-foreground transition-colors">
             Explore
           </Link>
-          <Link to="/become-chef" className="text-muted-foreground hover:text-foreground transition-colors">
-            Become a Chef
-          </Link>
+          {/* Only show Become a Chef link if user is logged in and is not already a chef */}
+          {user && profile?.role !== 'chef' && (
+            <Link to="/become-chef" className="text-muted-foreground hover:text-foreground transition-colors">
+              Become a Chef
+            </Link>
+          )}
           {user ? (
             <>
               <Link to="/dashboard" className="text-muted-foreground hover:text-foreground transition-colors">
