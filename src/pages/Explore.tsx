@@ -1,39 +1,22 @@
-
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabaseClient"; // Make sure this path is correct
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { ChefHat, Star } from "lucide-react";
 
-const chefs = [
-  {
-    id: 1,
-    name: "Sarah Johnson",
-    specialty: "Italian Cuisine",
-    rating: 4.9,
-    reviews: 128,
-    image: "https://images.unsplash.com/photo-1581299894007-aaa50297cf16?auto=format&fit=crop&q=80&w=400",
-    price: 120,
-  },
-  {
-    id: 2,
-    name: "Michael Chen",
-    specialty: "Asian Fusion",
-    rating: 4.8,
-    reviews: 96,
-    image: "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&q=80&w=400",
-    price: 150,
-  },
-  {
-    id: 3,
-    name: "Emma Martinez",
-    specialty: "Mediterranean",
-    rating: 4.7,
-    reviews: 84,
-    image: "https://images.unsplash.com/photo-1512485800893-b08ec1ea59b1?auto=format&fit=crop&q=80&w=400",
-    price: 135,
-  },
-];
-
 const Explore = () => {
+  const [chefs, setChefs] = useState([]);
+
+  useEffect(() => {
+    async function fetchChefs() {
+      let { data, error } = await supabase.from("chefs").select("*");
+      if (error) console.error("Error fetching chefs:", error);
+      else setChefs(data);
+    }
+
+    fetchChefs();
+  }, []);
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-3xl mx-auto mb-12 text-center animate-fade-down">
@@ -48,7 +31,7 @@ const Explore = () => {
           <Card key={chef.id} className="overflow-hidden animate-fade-up hover:shadow-md transition-shadow">
             <div className="aspect-[4/3] relative overflow-hidden">
               <img
-                src={chef.image}
+                src={chef.image || "https://via.placeholder.com/400"} // Use a default image if none is provided
                 alt={chef.name}
                 className="object-cover w-full h-full hover:scale-105 transition-transform duration-300"
               />
@@ -61,8 +44,8 @@ const Explore = () => {
                 </div>
                 <div className="flex items-center gap-1 text-accent">
                   <Star className="h-4 w-4 fill-current" />
-                  <span className="font-medium">{chef.rating}</span>
-                  <span className="text-muted-foreground text-sm">({chef.reviews})</span>
+                  <span className="font-medium">{chef.rating || "N/A"}</span>
+                  <span className="text-muted-foreground text-sm">({chef.reviews || 0})</span>
                 </div>
               </div>
             </CardHeader>
@@ -72,7 +55,7 @@ const Explore = () => {
                   <ChefHat className="h-4 w-4 text-muted-foreground" />
                   <span className="text-sm text-muted-foreground">Starting from</span>
                 </div>
-                <span className="font-semibold">${chef.price}/session</span>
+                <span className="font-semibold">${chef.price || "N/A"}/session</span>
               </div>
             </CardContent>
             <CardFooter>
