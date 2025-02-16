@@ -27,7 +27,7 @@ export function MainNav() {
           )}
           {user ? (
             <>
-              <Link to="/dashboard" className="text-muted-foreground hover:text-foreground transition-colors">
+              <Link to="/chef/dashboard" className="text-muted-foreground hover:text-foreground transition-colors">
                 Dashboard
               </Link>
               <Button variant="ghost" size="sm" className="flex items-center gap-2" onClick={() => signOut()}>
